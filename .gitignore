@@ -1,0 +1,22 @@
+# Секрети та сесії — ніколи не комітити
+.env
+data/*.session
+data/*.session-journal
+data/*.db
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db

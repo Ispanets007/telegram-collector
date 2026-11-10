@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  collector:
+    build: .
+    env_file: .env
+    volumes:
+      # Дані та сесія зберігаються між перезапусками
+      - ./data:/app/data
+      - ./sample_data:/app/sample_data
+    command: python scripts/collect.py
+
+  # Зручний запуск backfill
+  backfill:
+    build: .
+    env_file: .env
+    volumes:
+      - ./data:/app/data
+    command: python scripts/backfill.py --channels ukrainska_pravda_fast --max 2000
+    profiles:
+      - backfill
+
+  # Статистика
+  stats:
+    build: .
+    env_file: .env
+    volumes:
+      - ./data:/app/data
+      - ./sample_data:/app/sample_data
+    command: python scripts/stats.py --export sample_data/export.jsonl
+    profiles:
+      - stats
